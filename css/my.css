@@ -1,0 +1,8 @@
+/* Here is your custom css styles. */
+*{
+    cursor: url("/medias/normal.cur"),auto!important;
+ }
+ a {
+    cursor: url("/medias/help.cur"),auto!important;
+ }
+
