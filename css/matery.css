@@ -242,8 +242,10 @@ mark {
 }
 
 .bg-color {
-    background-image: linear-gradient(to right, #3b2ef7 0%, #2eadf7 100%);
+    background-color: rgba(200, 200, 200, 0.5); /* 稍微灰色且半透明 */
 }
+
+
 
 .text-color {
     color: #0f9d58 !important;
