@@ -171,6 +171,60 @@ $(function () {
 
     // 初始化加载 tooltipped.
     $('.tooltipped').tooltip();
+
+    // Markmap 初始化配置
+    function initMarkmap() {
+        if (typeof markmap !== 'undefined') {
+            const options = {
+                autoFit: true,
+                color: (node) => {
+                    return node.depth === 0 ? '#42b983' : '#666';
+                },
+                embedGlobalCSS: true,
+                maxWidth: 0,
+                nodeMinHeight: 16,
+                paddingX: 8,
+                paddingY: 5,
+                spacingHorizontal: 80,
+                spacingVertical: 5,
+                initialExpandLevel: 1,
+                duration: 500
+            };
+
+            // 等待 markmap 加载完成
+            setTimeout(() => {
+                if (markmap.autoLoader) {
+                    markmap.autoLoader.setOptions(options);
+                }
+                // 手动初始化已存在的 markmap
+                document.querySelectorAll('.markmap-container').forEach(container => {
+                    if (!container.markmap) {
+                        const mm = markmap.Markmap.create(container, options);
+                        container.markmap = mm;
+                    }
+                });
+            }, 1000);
+        }
+    }
+
+    // 在页面加载完成后初始化
+    $(document).ready(function() {
+        initMarkmap();
+    });
+
+    // 监听 markmap 容器的变化
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length) {
+                initMarkmap();
+            }
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 });
 
 //黑夜模式提醒开启功能
